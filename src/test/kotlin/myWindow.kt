@@ -9,6 +9,7 @@ class myWindow : Window(){
     }
 
     override fun onDisplay() {
+
     }
 
     override fun onKeyPressed(event: KeyEvent) {
