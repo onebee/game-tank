@@ -27,4 +27,8 @@ class Tank(override var x: Int, override var y: Int) : View {
 
         Painter.drawImage(imagePath, x, y)
     }
+
+    fun move(direction: Direction) {
+        this.currentDirection = direction
+    }
 }

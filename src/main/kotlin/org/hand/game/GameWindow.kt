@@ -1,6 +1,8 @@
 package org.hand.game
 
+import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
+import org.hand.game.enums.Direction
 import org.hand.game.model.*
 import org.itheima.kotlin.game.core.Window
 import java.io.File
@@ -11,7 +13,8 @@ class GameWindow : Window(title = "坦克大战",
         height = Config.gameHeight
 ) {
 
-    val views = arrayListOf<View>()
+    private val views = arrayListOf<View>()
+    private lateinit var tank : Tank
 
     override fun onCreate() {
 
@@ -33,6 +36,9 @@ class GameWindow : Window(title = "坦克大战",
             lineNum++
         }
 
+        tank = Tank(Config.block * 10, Config.block * 12)
+        views.add(tank)
+
     }
 
     override fun onDisplay() {
@@ -45,7 +51,17 @@ class GameWindow : Window(title = "坦克大战",
     }
 
     override fun onKeyPressed(event: KeyEvent) {
+        when (event.code) {
+            KeyCode.W ->   tank.move(direction = Direction.UP)
+            KeyCode.S ->   tank.move(direction = Direction.DOWN)
+            KeyCode.A ->   tank.move(direction = Direction.LEFT)
+            KeyCode.D ->   tank.move(direction = Direction.RIGHT)
+
+            KeyCode.ENTER -> tank.move(direction = Direction.RIGHT)
+
+        }
     }
+
 
     override fun onRefresh() {
     }
