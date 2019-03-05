@@ -97,7 +97,33 @@ class Tank(override var x: Int, override var y: Int) : Moveable {
 
     // 发射子弹
     fun shot(): Bullet {
-        return Bullet(x, y)
+
+        // 计算子弹的实际坐标
+
+        val tankX = x
+        val tankY = y
+        val tankWidth = width
+
+        var bulletX = 0
+        var bulletY = 0
+        var buttleWidth = 16
+        var bulletHeigh = 32
+
+        when (currentDirection) {
+            Direction.UP -> {
+                bulletX = tankX + (tankWidth - buttleWidth)/2
+                bulletY = tankY - bulletHeigh/2
+            }
+
+           /* Direction.DOWN ->
+
+            Direction.LEFT ->
+
+            Direction.RIGHT->*/
+        }
+
+
+        return Bullet(currentDirection, bulletX, bulletY)
     }
 
 }
