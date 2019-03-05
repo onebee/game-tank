@@ -2,11 +2,11 @@ package org.hand.game.model
 
 interface View {
 
-    var x: Int
-    var y: Int
+    val x: Int
+    val y: Int
 
-    var width: Int
-    var height: Int
+    val width: Int
+    val height: Int
 
     fun draw()
 }

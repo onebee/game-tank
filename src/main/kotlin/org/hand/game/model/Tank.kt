@@ -15,6 +15,7 @@ class Tank(override var x: Int, override var y: Int) : View {
 
 
     var currentDirection: Direction = Direction.UP
+    var speed = 8
 
     override fun draw() {
 
@@ -30,5 +31,11 @@ class Tank(override var x: Int, override var y: Int) : View {
 
     fun move(direction: Direction) {
         this.currentDirection = direction
+        when (direction) {
+            Direction.UP -> y -= speed
+            Direction.DOWN -> y += speed
+            Direction.LEFT -> x -= speed
+            Direction.RIGHT -> x += speed
+        }
     }
 }
