@@ -1,6 +1,8 @@
 package org.hand.game.model
 
 import org.hand.game.Config
+import org.hand.game.business.Blockable
+import org.hand.game.business.Moveable
 import org.hand.game.enums.Direction
 import org.itheima.kotlin.game.core.Painter
 
@@ -9,13 +11,17 @@ import org.itheima.kotlin.game.core.Painter
  *
  * 我方坦克
  * **/
-class Tank(override var x: Int, override var y: Int) : View {
+class Tank(override var x: Int, override var y: Int) : Moveable {
+
     override var width: Int = Config.block
     override var height: Int = Config.block
 
 
-    var currentDirection: Direction = Direction.UP
-    var speed = 8
+    override var currentDirection: Direction = Direction.UP
+    override var speed = 8
+
+    //    坦克不可以走的方向
+    private var badDirection: Direction? = null
 
     override fun draw() {
 
@@ -30,6 +36,11 @@ class Tank(override var x: Int, override var y: Int) : View {
     }
 
     fun move(direction: Direction) {
+        // 判断是否要往碰撞的方向走
+        if (direction == badDirection) {
+            return
+        }
+
 
         // 当前方向和希望的方向不一致时候才去改变方向
         if (this.currentDirection != direction) {
@@ -49,4 +60,15 @@ class Tank(override var x: Int, override var y: Int) : View {
         if (y < 0) y = 0
         if (y > Config.gameHeight - height) y = Config.gameHeight - height
     }
+
+    override fun willCollision(blockable: Blockable): Direction? {
+        // 检测碰撞
+
+        return Direction.UP
+    }
+
+    override fun notifyCollision(direction: Direction?, block: Blockable?) {
+        this.badDirection = direction
+    }
+
 }
