@@ -89,11 +89,15 @@ class Tank(override var x: Int, override var y: Int) : Moveable {
 
         return if (collision) currentDirection else null
 
-//        return Direction.UP
     }
 
     override fun notifyCollision(direction: Direction?, block: Blockable?) {
         this.badDirection = direction
+    }
+
+    // 发射子弹
+    fun shot(): Bullet {
+        return Bullet(x, y)
     }
 
 }

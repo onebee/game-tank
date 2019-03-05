@@ -7,6 +7,7 @@ import org.hand.game.business.Moveable
 import org.hand.game.enums.Direction
 import org.hand.game.model.*
 import org.itheima.kotlin.game.core.Window
+
 import java.io.File
 
 class GameWindow : Window(title = "汉得物联网事业部-开发组",
@@ -59,7 +60,11 @@ class GameWindow : Window(title = "汉得物联网事业部-开发组",
             KeyCode.A -> tank.move(direction = Direction.LEFT)
             KeyCode.D -> tank.move(direction = Direction.RIGHT)
 
-            KeyCode.ENTER -> tank.move(direction = Direction.RIGHT)
+            KeyCode.ENTER -> {
+                val shot = tank.shot()
+                // 交给views 管理
+                views.add(shot)
+            }
 
         }
     }
@@ -67,8 +72,6 @@ class GameWindow : Window(title = "汉得物联网事业部-开发组",
 
     override fun onRefresh() {
         // 业务逻辑
-
-
         //判断运动物体和阻塞物体是否发生碰撞
         views.filter { it is Moveable }.forEach { move ->
             move as Moveable
@@ -76,7 +79,6 @@ class GameWindow : Window(title = "汉得物联网事业部-开发组",
             var badBlock: Blockable? = null
 
             views.filter { it is Blockable }.forEach blockTag@{ block ->
-
 
                 block as Blockable
 
