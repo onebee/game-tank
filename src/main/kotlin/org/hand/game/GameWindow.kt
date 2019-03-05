@@ -9,7 +9,7 @@ import org.hand.game.model.*
 import org.itheima.kotlin.game.core.Window
 import java.io.File
 
-class GameWindow : Window(title = "坦克大战",
+class GameWindow : Window(title = "汉得物联网事业部-开发组",
         icon = "icon/logo.png",
         width = Config.gameWidth,
         height = Config.gameHeight

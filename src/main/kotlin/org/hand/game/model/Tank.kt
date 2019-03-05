@@ -20,7 +20,7 @@ class Tank(override var x: Int, override var y: Int) : Moveable {
     override var currentDirection: Direction = Direction.UP
     override var speed = 8
 
-    //    坦克不可以走的方向
+    // 坦克不可以走的方向
     private var badDirection: Direction? = null
 
     override fun draw() {
@@ -61,10 +61,35 @@ class Tank(override var x: Int, override var y: Int) : Moveable {
         if (y > Config.gameHeight - height) y = Config.gameHeight - height
     }
 
-    override fun willCollision(blockable: Blockable): Direction? {
-        // 检测碰撞
+    override fun willCollision(block: Blockable): Direction? {
 
-        return Direction.UP
+        // 将要碰撞时 做逻辑判断  未来的坐标
+        var x: Int = this.x
+        var y: Int = this.y
+
+        when (currentDirection) {
+            Direction.UP -> y -= speed
+            Direction.DOWN -> y += speed
+            Direction.LEFT -> x -= speed
+            Direction.RIGHT -> x += speed
+        }
+
+
+        // 检测碰撞
+        var collision = when {
+            block.y + block.height <= y -> // 阻挡物在运动物的上方  不碰撞
+                false
+            y + height <= block.y -> // 阻挡物在运动物的下方  不碰撞
+                false
+            block.x + block.width <= x -> // 阻挡物在运动物的左方  不碰撞
+                false
+
+            else -> x + width > block.x
+        }
+
+        return if (collision) currentDirection else null
+
+//        return Direction.UP
     }
 
     override fun notifyCollision(direction: Direction?, block: Blockable?) {
