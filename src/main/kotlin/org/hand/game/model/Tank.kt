@@ -98,32 +98,44 @@ class Tank(override var x: Int, override var y: Int) : Moveable {
     // 发射子弹
     fun shot(): Bullet {
 
-        // 计算子弹的实际坐标
 
-        val tankX = x
-        val tankY = y
-        val tankWidth = width
+        // 第二个参数需要传入一个函数,并返回结果
+        return Bullet(currentDirection, { bulletWidth, bulletHeight ->
+            // 计算子弹的实际坐标
+            val tankX = x
+            val tankY = y
+            val tankWidth = width
+            val tankHeigh = height
 
-        var bulletX = 0
-        var bulletY = 0
-        var buttleWidth = 16
-        var bulletHeigh = 32
+            var bulletX = 0
+            var bulletY = 0
+//            var buttleWidth = 16
+//            var bulletHeigh = 32
 
-        when (currentDirection) {
-            Direction.UP -> {
-                bulletX = tankX + (tankWidth - buttleWidth)/2
-                bulletY = tankY - bulletHeigh/2
+            when (currentDirection) {
+                Direction.UP -> {
+                    bulletX = tankX + (tankWidth - bulletWidth) / 2
+                    bulletY = tankY - bulletHeight / 2
+                }
+                Direction.DOWN -> {
+                    bulletX = tankX + (tankWidth - bulletWidth) / 2
+                    bulletY = tankY + tankHeigh - bulletHeight / 2
+                }
+                Direction.LEFT -> {
+                    bulletX = tankX - bulletWidth / 2
+                    bulletY = tankY + (tankHeigh - bulletHeight) / 2
+                }
+                Direction.RIGHT -> {
+                    bulletX = tankX + tankWidth - bulletWidth / 2
+                    bulletY = tankY + (tankHeigh - bulletHeight) / 2
+                }
+
             }
 
-           /* Direction.DOWN ->
 
-            Direction.LEFT ->
+            Pair(bulletX, bulletY)
 
-            Direction.RIGHT->*/
-        }
-
-
-        return Bullet(currentDirection, bulletX, bulletY)
+        })
     }
 
 }
