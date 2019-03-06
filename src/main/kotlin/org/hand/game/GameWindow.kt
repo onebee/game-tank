@@ -4,12 +4,14 @@ import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
 import org.hand.game.business.AutoMovable
 import org.hand.game.business.Blockable
+import org.hand.game.business.Destroyable
 import org.hand.game.business.Moveable
 import org.hand.game.enums.Direction
 import org.hand.game.model.*
 import org.itheima.kotlin.game.core.Window
 
 import java.io.File
+import java.util.concurrent.CopyOnWriteArrayList
 
 class GameWindow : Window(title = "汉得物联网事业部-开发组",
         icon = "icon/logo.png",
@@ -17,7 +19,11 @@ class GameWindow : Window(title = "汉得物联网事业部-开发组",
         height = Config.gameHeight
 ) {
 
-    private val views = arrayListOf<View>()
+//    private val views = arrayListOf<View>()
+
+    // 用线程安全的集合
+    private val  views = CopyOnWriteArrayList<View>()
+
     private lateinit var tank: Tank
 
     override fun onCreate() {
@@ -72,6 +78,9 @@ class GameWindow : Window(title = "汉得物联网事业部-开发组",
 
 
     override fun onRefresh() {
+
+
+        println(views.size)
         // 业务逻辑
         //判断运动物体和阻塞物体是否发生碰撞
         views.filter { it is Moveable }.forEach { move ->
@@ -103,6 +112,14 @@ class GameWindow : Window(title = "汉得物联网事业部-开发组",
 
         views.filter { it is AutoMovable }.forEach {
             (it as AutoMovable).antoMove()
+        }
+
+        // 检测销毁
+        views.filter { it is Destroyable }.forEach {
+
+            if ((it as Destroyable).isDestory()) {
+                views.remove(it)
+            }
         }
 
 

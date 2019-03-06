@@ -3,6 +3,7 @@ package org.hand.game.model
 
 import org.hand.game.Config
 import org.hand.game.business.AutoMovable
+import org.hand.game.business.Destroyable
 import org.hand.game.enums.Direction
 import org.itheima.kotlin.game.core.Painter
 
@@ -12,7 +13,8 @@ import org.itheima.kotlin.game.core.Painter
  * 这里传入一个函数 需要返回两个值
  * */
 
-class Bullet(override val currentDirection: Direction, create: (width: Int, height: Int) -> Pair<Int, Int> ) : AutoMovable {
+class Bullet(override val currentDirection: Direction, create: (width: Int, height: Int) -> Pair<Int, Int> ) : AutoMovable ,Destroyable{
+
 
 
     override val speed: Int = 8
@@ -65,6 +67,14 @@ class Bullet(override val currentDirection: Direction, create: (width: Int, heig
             Direction.RIGHT -> x +=speed
             Direction.LEFT -> x -= speed
         }
+
+    }
+
+    override fun isDestory(): Boolean {
+        if (x < -width || x > Config.gameWidth || y < -height || y > Config.gameHeight) {
+            return true
+        }
+        return  false
 
     }
 }
