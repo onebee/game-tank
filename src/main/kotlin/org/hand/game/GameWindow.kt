@@ -2,6 +2,7 @@ package org.hand.game
 
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyEvent
+import org.hand.game.business.AutoMovable
 import org.hand.game.business.Blockable
 import org.hand.game.business.Moveable
 import org.hand.game.enums.Direction
@@ -98,6 +99,10 @@ class GameWindow : Window(title = "汉得物联网事业部-开发组",
             //通知可以移动的物体 会在哪个方向和哪个物体碰撞
             move.notifyCollision(badDirection, badBlock)
 
+        }
+
+        views.filter { it is AutoMovable }.forEach {
+            (it as AutoMovable).antoMove()
         }
 
 
